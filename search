@@ -1,0 +1,18 @@
+#!/bin/bash
+engine=$(printf "searx\ngoogle\nyoutube" |  dmenu -c -l 3 -p "Choose engine")
+[ -n  "$engine" ] && search=$(dmenu -c -p "$engine")
+if [ "${search: -4}" = ".com" ];then
+	$BROWSER https://$search
+elif [ -n "$search" ]; then
+	case "$engine" in
+		google)
+			$BROWSER https://google.com/search?q="$search"
+			;;
+		searx)
+			$BROWSER https://searx.tiekoetter.com/search?q="$search"
+			;;
+		youtube)
+			$BROWSER https://www.youtube.com/results?search_query="$search"
+			;;
+	esac
+fi

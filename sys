@@ -1,0 +1,9 @@
+#!/bin/sh
+pkill herbe
+herbe "$(free -m | awk 'NR==2{printf "mem: %sMB/%sMB (%.2f%%)\n", $3,$2,$3*100/$2 }'
+top -bn1 | grep load | awk '{printf "load: %.2f\n", $(NF-2)}') 
+$(grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print "cpu: " usage "%"}')
+$(sensors | awk '/Core 0/ {printf "temp: %.2f\n", $3 }')
+$(nvidia-smi --query-gpu=temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader,nounits | sed -ur 's|([[:digit:]]+)[^[:digit:]]*([[:digit:]]+)[^[:digit:]]*([[:digit:]]+)|gpu: \2% \3% \1°|g')" &&
+	herbe "$(ps axch -o cmd:15,%cpu --sort=-%cpu | head)" && bspc rule -a \* -o state=floating && 
+	$TERMINAL -e htop

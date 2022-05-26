@@ -1,0 +1,3 @@
+#!/bin/sh
+string=$(xclip -out | dmenu -c -l 10 -i -p "string")
+[ -n "$string" ] && herbe ${#string}

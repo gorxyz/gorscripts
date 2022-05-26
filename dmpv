@@ -1,0 +1,6 @@
+#!/bin/sh
+MUSIC="/home/gor/ms"
+SOCK="/tmp/mpvsocket"
+
+music=$(fd . --base-directory "$MUSIC" --type f | dmenu -c -l 10 -p "music")
+[ -n "$music" ] && mpv "$music" --idle --no-terminal --no-audio-display --input-ipc-server="$SOCK"

@@ -1,0 +1,3 @@
+#!/bin/sh
+pkill herbe
+herbe "$(uptime -p)"

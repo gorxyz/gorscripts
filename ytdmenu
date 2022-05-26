@@ -1,0 +1,7 @@
+#!/bin/sh
+query=$(cat /dev/null | dmenu -c -l 10 -p "Search:" | tr ' ' '+')
+[ -n "$query" ] &&
+	query=$(curl -s "https://www.youtube.com/results?search_query=""$query""&sp=EgIQAQ%253D%253D")
+	vid=$( echo "$query" | grep -Po '(/watch\?v=.{11})|(?<=title":{"runs":\[{"text":").+?(?="}\])' \
+	| paste - - | dmenu -c -l 10 | cut -f2 || herbe "something went wrong...")
+	[ "$vid" ] && mpv "https://youtube.com""$vid"

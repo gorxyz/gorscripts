@@ -1,0 +1,3 @@
+#!/bin/sh
+time=$(seq 10 | dmenu -c -l 10 -p "Delay time for boomer")
+[ -n "$time" ] && boomer -d "$time"

@@ -1,0 +1,7 @@
+#!/bin/sh
+TMUX_SESSION=$( (tmux list-session -F '#S';echo new) | dmenu -c -l 10 -p "tmux manager")
+if [ "$TMUX_SESSION" = "new" ];then
+    $TERMINAL -e tmux &
+elif [ -n "$TMUX_SESSION" ];then
+    $TERMINAL -e tmux attach -t "$TMUX_SESSION" &
+fi
